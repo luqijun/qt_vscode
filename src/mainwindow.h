@@ -1,22 +1,22 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QWidget>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Widget; }
+namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class Widget : public QWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Widget(QWidget *parent = nullptr);
-    ~Widget();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 private:
-    Ui::Widget *ui;
+    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H
