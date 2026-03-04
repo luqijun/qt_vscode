@@ -26,14 +26,16 @@ elseif(WIN32)
     # Windows 环境使用 Qt6
     set(QT_VERSION_MAJOR 6)
     message(STATUS "Detected Windows platform, using Qt 6")
+    # Set CMAKE_PREFIX_PATH to Qt6 installation directory
+    # Note: Adjust the path to match your actual Qt6 installation location
+    set(CMAKE_PREFIX_PATH "D:\\AppsDev\\Qt\\6.9.2\\msvc2022_64")
     find_package(Qt6 REQUIRED COMPONENTS Widgets)
     qt_standard_project_setup()
 else()
-    # 其他平台默认使用 Qt6
-    set(QT_VERSION_MAJOR 6)
-    message(STATUS "Other platform, using Qt 6")
-    find_package(Qt6 REQUIRED COMPONENTS Widgets)
-    qt_standard_project_setup()
+    # 其他平台不支持
+    message(FATAL_ERROR "Unsupported platform")
 endif()
 
+# 包含 src 目录
 add_subdirectory(src)
+

@@ -17,7 +17,13 @@ if(UNIX AND NOT APPLE)
     # Add build directory to include path for generated UI headers
     target_include_directories(${EXECUTABLE_FILENAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
+    # Find Python3
+    set(Python3_ROOT_DIR "/home/numbat/miniconda3/envs/py38")
+    set(PYTHON_EXECUTABLE "/home/numbat/miniconda3/envs/py38/bin/python")
+    find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+
 elseif(WIN32)
+    # Process UI file for Qt 6
     qt_add_executable(${EXECUTABLE_FILENAME}
         main.cpp
         mainwindow.cpp
@@ -25,11 +31,24 @@ elseif(WIN32)
         mainwindow.ui
     )
 
+    # Find Python3
+    set(Python3_ROOT_DIR "D:\\AppsDev\\Python38")
+    set(PYTHON_EXECUTABLE "D:\\AppsDev\\Python38\\python.exe")
+    find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+
 else()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
-target_link_libraries(${EXECUTABLE_FILENAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+
+# Add Python include directories
+target_include_directories(${EXECUTABLE_FILENAME} PRIVATE ${Python3_INCLUDE_DIRS})
+# target_link_libraries(${EXECUTABLE_FILENAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(${EXECUTABLE_FILENAME} PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    ${Python3_LIBRARIES}  # 使用变量替代目标
+)
 
 set_target_properties(${EXECUTABLE_FILENAME} PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
